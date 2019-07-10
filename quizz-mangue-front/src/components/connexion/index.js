@@ -1,5 +1,6 @@
 import React from 'react'
 import { Modal, Button } from 'react-bootstrap'
+import axios from 'axios'
 export default class Quizz extends React.Component {
   constructor(props, context) {
     super(props, context)
@@ -8,7 +9,9 @@ export default class Quizz extends React.Component {
     this.handleClose = this.handleClose.bind(this)
 
     this.state = {
-      show: false
+      show: false,
+      email: '',
+      password: ''
     }
   }
 
@@ -16,8 +19,30 @@ export default class Quizz extends React.Component {
     this.setState({ show: false })
   }
 
+  handleChange = event => {
+    const name = event.target.name
+    const value = event.target.value
+
+    this.setState({
+      [name]: value
+    })
+    console.log(this.state)
+  }
+
   handleShow() {
     this.setState({ show: true })
+  }
+  connexion = () => {
+    const { email, password } = this.state
+    axios
+      .post(
+        'http://localhost:9999/api/v1/user/login',
+        { email, password },
+        { headers: { 'Access-Control-Allow-Origin': '*' } }
+      )
+      .then(res => {
+        console.log(res)
+      })
   }
 
   componentDidMount() {}
@@ -25,9 +50,9 @@ export default class Quizz extends React.Component {
   render() {
     return (
       <>
-        <a href="#" onClick={this.handleShow}>
+        <p className="link" href="#" onClick={this.handleShow}>
           Connexion
-        </a>
+        </p>
         <Modal
           className="my-modal"
           show={this.state.show}
@@ -38,19 +63,29 @@ export default class Quizz extends React.Component {
           <Modal.Body>
             <label htmlFor="email">
               Email:
-              <input type="email" placeholder="Entrez votre email" />
+              <input
+                onChange={this.handleChange}
+                name="email"
+                type="email"
+                placeholder="Entrez votre email"
+              />
             </label>
             <label htmlFor="password">
               Mot de passe:
-              <input type="password" placeholder="Entrez votre mot de passe" />
+              <input
+                name="password"
+                onChange={this.handleChange}
+                type="password"
+                placeholder="Entrez votre mot de passe"
+              />
             </label>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={this.handleClose}>
-              Close
+              Fermer
             </Button>
-            <Button variant="primary" onClick={this.handleClose}>
-              Save Changes
+            <Button variant="primary" onClick={this.connexion}>
+              Connexion
             </Button>
           </Modal.Footer>
         </Modal>

@@ -21,18 +21,18 @@ module.exports = function(connection) {
   // sql request to get one user by id
   const get = function getUser(clbk, id) {
     const sql = `SELECT * FROM ${table} WHERE id = ?`
-    const q = connection.query(sql, id, (err, user) => {
+    const q = connection.query(sql, [id], (err, user) => {
       if (err) return clbk(err, null)
       return clbk(null, user)
     })
     console.log(q.sql)
   }
 
-  const getByMail = function getUserByMail(clbk, mail) {
+  const getByMail = function getUserByMail(clbk, email) {
     const sql = `SELECT * FROM ${table} WHERE email = ?`
-    const q = connection.query(sql, mail, (err, user) => {
+    const q = connection.query(sql, [email], (err, user) => {
       if (err) return clbk(err, null)
-      return clbk(null, ...user)
+      return clbk(null, user[0])
     })
     console.log(q.sql)
   }

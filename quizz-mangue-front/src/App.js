@@ -1,7 +1,7 @@
 import React from 'react'
 import './App.css'
 import Quizz from './components/Quiz'
-import Connexion from './components/Connexion'
+import Connexion from './components/connexion'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import Profil from './views/profil'
 export default class App extends React.Component {

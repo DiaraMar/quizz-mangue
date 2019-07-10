@@ -95,6 +95,8 @@ module.exports = (function userAPI() {
         // sinon si le mail n'existe pas en bdd, retourner une erreur au client
         else if (!user) return res.status(401).send('unknown mail')
 
+        console.log('user', user)
+
         // sinon  le mail a été trouvé, comparer le password avec son crypt/salt
         bcrypt
           .compare(req.body.password, user.password)
