@@ -14,6 +14,8 @@ export default class Quiz extends React.Component {
       size : 10,
     })
     this.addQuestion = this.addQuestion.bind(this);
+    this.handleSubmitQuizz = this.handleSubmitQuizz.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount(){
@@ -27,19 +29,32 @@ export default class Quiz extends React.Component {
     
     })
     console.log('questions state from add question after :', this.state.questions);
-    
-
   }
 
+  handleSubmitQuizz(event){
+    event.preventDefault();
+    console.log(this.state)
+  }
+
+  handleChange(event){
+    this.setState({
+      ...this.state,
+      [event.target.name] : event.target.value
+    })
+    console.log(this.state) 
+  }
   render(){
-    console.log("render in the quiz ****", this.state.questions)
+
+    console.log("render in the quiz", this.state.questions)
+ 
+    console.log("render in the quiz ****", this.state)
     console.log("***** end of the render in the quiz ****")
     return(
       <section>
         <h1>Create a quizz </h1>
         <form onSubmit={this.handleSubmitQuizz} className="w-50" >
-        <label>Name of your quizz  </label><input name="title" required/>
-        <label>Theme of your quizz  </label><input name="theme" required/>
+        <label>Name of your quizz  </label><input name="name" onChange={this.handleChange} required/>
+        <label>Theme of your quizz  </label><input name="theme" onChange={this.handleChange} required/>
         <button className="btn btn-primary" disabled={!this.state.questions.length>=1}>CREATE A QUIZZ</button>
        </form>
         <hr/>

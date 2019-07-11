@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import Quiz from './components/Quiz'
+import QuizzesList from './components/QuizzesList'
 
 export default class App extends React.Component {
   constructor(props){
@@ -14,6 +15,7 @@ export default class App extends React.Component {
   render(){
     return(
       <section>
+        <QuizzesList/>
         <Quiz/> 
       </section>
     )
