@@ -7,10 +7,12 @@ export default class Question extends React.Component {
 
     this.state = {
       title: '',
-      firstProposition: '',
-      secondProposition: '',
-      thirdProposition: '',
-      fourthProposition: '',
+      choices: {
+        answer0: '',
+        answer1: '',
+        answer2: '',
+        answer3: ''
+      },
       answer: '',
       timeLimit: 30,
       isAnswer: false
@@ -27,11 +29,12 @@ export default class Question extends React.Component {
   }
 
   handleChange(event) {
+    const name = event.target.name
+    const index = name[name.length - 1]
+    console.log(Object.keys(this.state.choices))
     this.setState({
-      ...this.state,
-      [event.target.name]: event.target.value
+      [Object.keys(this.state.choices)[Number(index)]]: event.target.value
     })
-    console.log(this.state)
   }
 
   handleAnswer(event) {
@@ -71,7 +74,7 @@ export default class Question extends React.Component {
           <label>Proposition </label>{' '}
           <input
             className="form-control"
-            name="firstProposition"
+            name="answer0"
             value={this.state.firstProposition}
             onChange={this.handleChange}
             onClick={this.handleAnswer}
@@ -80,7 +83,7 @@ export default class Question extends React.Component {
           <label>Proposition </label>{' '}
           <input
             className="form-control"
-            name="secondProposition"
+            name="answer1"
             value={this.state.secondProposition}
             onChange={this.handleChange}
             onClick={this.handleAnswer}
@@ -89,7 +92,7 @@ export default class Question extends React.Component {
           <label>Proposition </label>{' '}
           <input
             className="form-control"
-            name="thirdProposition"
+            name="answer2"
             value={this.state.thirdProposition}
             onChange={this.handleChange}
             onClick={this.handleAnswer}
@@ -97,7 +100,7 @@ export default class Question extends React.Component {
           <label>Proposition </label>{' '}
           <input
             className="form-control"
-            name="fourthProposition"
+            name="answer3"
             value={this.state.fourthProposition}
             onChange={this.handleChange}
             onClick={this.handleAnswer}
