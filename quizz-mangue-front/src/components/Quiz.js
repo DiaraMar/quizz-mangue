@@ -1,52 +1,40 @@
-import React from 'react'
-import Question from './Question'
-// import shortid from 'shortid';
-// import { nullableTypeAnnotation } from '@babel/types';
+import React from "react";
+import { nullableTypeAnnotation } from "@babel/types";
+import QuestionsForm from "./Questionsform";
 
 export default class Quiz extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      name: '',
-      theme: '',
-      idCreator: '',
-      questions: [],
+      name: "",
+      theme: "",
+      idCreator: "",
       size: 10
-    }
-    this.addQuestion = this.addQuestion.bind(this)
-    this.handleSubmitQuizz = this.handleSubmitQuizz.bind(this)
-    this.handleChange = this.handleChange.bind(this)
+    };
+    this.handleSubmitQuizz = this.handleSubmitQuizz.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {}
 
-  addQuestion(question) {
-    this.setState({
-      questions: [...this.state.questions, question]
-    })
-    console.log(
-      'questions state from add question after :',
-      this.state.questions
-    )
-  }
 
   handleSubmitQuizz(event) {
-    event.preventDefault()
-    console.log(this.state)
+    event.preventDefault();
+    console.log(this.state);
   }
 
   handleChange(event) {
     this.setState({
       ...this.state,
       [event.target.name]: event.target.value
-    })
-    console.log(this.state)
+    });
+    console.log(this.state);
   }
   render() {
-    console.log('render in the quiz', this.state.questions)
+    console.log("render in the quiz", this.state.questions);
 
-    console.log('render in the quiz ****', this.state)
-    console.log('***** end of the render in the quiz ****')
+    console.log("render in the quiz ****", this.state);
+    console.log("***** end of the render in the quiz ****");
     return (
       <section>
         <h1>Create a quizz </h1>
@@ -56,22 +44,12 @@ export default class Quiz extends React.Component {
           <label>Theme of your quizz </label>
           <input name="theme" onChange={this.handleChange} required />
           <button
-            className="btn btn-primary"
-            disabled={!this.state.questions.length >= 1}>
+            className="btn btn-primary">
             CREATE A QUIZZ
           </button>
         </form>
-        <hr />
-        {this.state.questions.length < this.state.size ? (
-          <h3>Add a question</h3>
-        ) : (
-          <p> Submit your quizz</p>
-        )}
-        {this.state.questions.length < this.state.size && (
-          <Question onSubmit={e => this.addQuestion(e)} />
-        )}
-        <hr />
+        <QuestionsForm/>
       </section>
-    )
+    );
   }
 }

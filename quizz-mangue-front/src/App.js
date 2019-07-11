@@ -19,7 +19,7 @@ export default class App extends React.Component {
           <Nav history={history} />
         </Router>
         <QuizzesList />
-        <Quiz />
+        
       </section>
     )
   }
