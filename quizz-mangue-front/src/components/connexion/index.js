@@ -1,6 +1,8 @@
 import React from 'react'
 import { Modal, Button } from 'react-bootstrap'
 import axios from 'axios'
+// import { Route } from 'react-router-dom'
+
 export default class Quizz extends React.Component {
   constructor(props, context) {
     super(props, context)
@@ -10,8 +12,8 @@ export default class Quizz extends React.Component {
 
     this.state = {
       show: false,
-      email: '',
-      password: ''
+      email: 'lolol@lol.fr',
+      password: 'gneugneu'
     }
   }
 
@@ -41,13 +43,27 @@ export default class Quizz extends React.Component {
         { headers: { 'Access-Control-Allow-Origin': '*' } }
       )
       .then(res => {
-        console.log(res)
+        const token = res.data.token
+        localStorage.setItem('authToken', token)
+        this.setState({ show: false })
+        this.props.history.push('/profil')
       })
   }
 
-  componentDidMount() {}
-
   render() {
+    // const Button = () => (
+    //   <Route
+    //     render={({ history }) => (
+    //       <button
+    //         type="button"
+    //         onClick={() => {
+    //           history.push('/profil')
+    //         }}>
+    //         Click Me!
+    //       </button>
+    //     )}
+    //   />
+    // )
     return (
       <>
         <p className="link" href="#" onClick={this.handleShow}>

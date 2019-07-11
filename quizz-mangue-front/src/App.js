@@ -2,15 +2,20 @@ import React from 'react'
 import './App.css'
 import Quizz from './components/Quiz'
 import Connexion from './components/connexion'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+// import { Route, Link } from 'react-router-dom'
+// import { createBrowserHistory } from 'history'
+import { Router } from 'react-router'
+import { Route, Link } from 'react-router-dom'
+import createHistory from 'history/createBrowserHistory'
 import Profil from './views/profil'
 export default class App extends React.Component {
   componentDidMount() {}
 
   render() {
+    const history = createHistory()
     return (
       <section>
-        <Router>
+        <Router history={history}>
           <div>
             <ul>
               <li>
@@ -23,12 +28,12 @@ export default class App extends React.Component {
                 <Link to="/quizz">Quizz</Link>
               </li>
               <li>
-                <Connexion />
+                <Connexion history={history} />
               </li>
             </ul>
 
             <hr />
-
+            <Route path="/" exact component={Profil} />
             <Route path="/profil" component={Profil} />
             <Route path="/quizz" component={Quizz} />
           </div>
