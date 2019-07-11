@@ -5,11 +5,11 @@ module.exports = function(connection) {
   // CRUD
   // sql request to create one user
   const create = function createUser(clbk, user) {
-    const sql = `INSERT INTO ${table} (email, password, pseudo, role) VALUES (?, ?, ?, ?)`
-    const { email, password, pseudo, role } = user
+    const sql = `INSERT INTO ${table} (email, password, pseudo, role) VALUES (?, ?, ?, 'user')`
+    const { email, password, pseudo } = user
     const query = connection.query(
       sql,
-      [email, password, pseudo, role],
+      [email, password, pseudo],
       (err, res) => {
         if (err) return clbk(err, null)
         return clbk(null, res)

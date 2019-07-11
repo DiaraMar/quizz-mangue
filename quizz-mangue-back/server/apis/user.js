@@ -43,31 +43,34 @@ module.exports = (function userAPI() {
         check('pseudo')
           .exists()
           .isLength({ min: 2 })
-          .isString(),
-        check('role')
-          .exists()
-          .isIn(['admin', 'user'])
+          .isString()
       ],
       (req, res) => {
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
           return res.status(422).json({ errors: errors.array() })
         }
-        const { email, password, pseudo, role } = req.body
-        const newUser = { email, pseudo, role }
+        const { email, password, pseudo } = req.body
 
-        bcrypt
-          .hash(password, 10)
-          .then(hash => {
-            newUser.password = hash
-            userModel.create(function(err, result) {
-              if (err) return res.status(520).send(err)
-              return res.status(201).send(result)
-            }, newUser)
-          })
-          .catch(err => {
-            return res.status(500).send(err)
-          })
+        userModel.getByMail((err, user) => {
+          if (err) return res.status(500).send(err)
+          // sinon si le mail n'existe pas en bdd, retourner une erreur au client
+          else if (user) return res.status(401).send('mail already exists')
+          const newUser = { email, pseudo }
+
+          bcrypt
+            .hash(password, 10)
+            .then(hash => {
+              newUser.password = hash
+              userModel.create(function(err, result) {
+                if (err) return res.status(520).send(err)
+                return res.status(201).send(result)
+              }, newUser)
+            })
+            .catch(err => {
+              return res.status(500).send(err)
+            })
+        }, email)
       }
     )
 
