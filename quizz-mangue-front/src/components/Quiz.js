@@ -22,17 +22,19 @@ export default class Quiz extends React.Component {
 
   addQuestion(question){
     
-    console.log('questions state :', this.state.questions);
     this.setState({
-      questions : [question, ...this.state.questions]
+      questions : [... this.state.questions, question]
     })
+    console.log('questions state from add question after :', this.state.questions);
+
   }
 
   render(){
-    console.log("render in the quiz", this.state.questions)
+    console.log("render in the quiz ****", this.state.questions)
+    console.log("***** end of the render in the quiz ****")
     return(
       <section>
-       <Question onSubmit={()=>this.addQuestion(this)}/>
+       <Question onSubmit={(e)=> this.addQuestion(e)}/>
       </section>
     )
   }

@@ -6,7 +6,6 @@ export default class Question extends React.Component {
     super(props);
 
     this.state=({
-      idQuestion:"",
       title: "",
       firstProposition:"",
       secondProposition:"",
@@ -47,11 +46,14 @@ export default class Question extends React.Component {
     event.preventDefault();
     console.log("handle submit");
     this.props.onSubmit({
-      id: shortid.generate()
+      question: this.state
     })
+
+    console.log("handle submit", this.state);
   }
 
   render(){
+    console.log('question in the question', this.state);
     return(
       <section>
         <form 
