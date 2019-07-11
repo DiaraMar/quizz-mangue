@@ -7,15 +7,16 @@ export default class Question extends React.Component {
     super(props)
 
     this.state = {
-      title: '',
+      title: 'lol',
       choices: {
         answer0: '',
         answer1: '',
         answer2: '',
         answer3: ''
       },
+      id_quizz: localStorage.getItem('idQuizz'),
       answer: '',
-      timeLimit: 30,
+      time_limit: 30,
       isAnswer: false
     }
 
@@ -32,14 +33,15 @@ export default class Question extends React.Component {
   handleChange(event) {
     const name = event.target.name
     const index = name[name.length - 1]
-    console.log(Object.keys(this.state.choices))
     this.setState({
-      [Object.keys(this.state.choices)[Number(index)]]: event.target.value
+      choices: {
+        ...this.state.choices,
+        [Object.keys(this.state.choices)[Number(index)]]: event.target.value
+      }
     })
   }
 
   handleAnswer(event) {
-    console.log('xxxxxxxxxxxxxxxxxxx', event.target.value)
     this.setState({
       answer: event.target.value,
       isAnswer: true
@@ -49,21 +51,27 @@ export default class Question extends React.Component {
   handleSubmit(event) {
     event.preventDefault()
     console.log('handle submit')
-    this.setState({
-      answers: [...this.state.answers, { answer: event.target.value }]
-    })
+    // this.setState({
+    //   answers: [...this.state.answers, { answer: event.target.value }]
+    // })
 
     this.props.onSubmit({
       question: this.state
     })
-    /*const { id_quizz, title, choices, answer, time_limit } = this.state;
-    axios.post(`http://localhost/9999/api/v1/question`, {
-      id_quizz,
-      title,
-      choices,
-      answer,
-      time_limit
-    });*/
+    const { id_quizz, title, choices, answer, time_limit } = this.state
+    console.log(id_quizz, title, choices, answer, time_limit)
+
+    axios.post(
+      `http://localhost:9999/api/v1/question`,
+      {
+        id_quizz,
+        title,
+        choices: JSON.stringify(choices),
+        answer,
+        time_limit
+      },
+      { headers: { 'Access-Control-Allow-Origin': '*' } }
+    )
     console.log('handle submit', this.state)
   }
 
@@ -131,7 +139,7 @@ export default class Question extends React.Component {
           <br />
           <button
             className="btn btn-primary"
-            disabled={!this.state.isAnswer}
+            // disabled={!this.state.isAnswer}
             onClick={this.handleSubmit}>
             New question
           </button>
