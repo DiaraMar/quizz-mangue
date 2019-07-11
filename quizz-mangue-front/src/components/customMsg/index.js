@@ -1,4 +1,5 @@
 import React from 'react'
+import './customMsg.scss'
 
 export default class CustomMsg extends React.Component {
   constructor(props) {
@@ -11,7 +12,7 @@ export default class CustomMsg extends React.Component {
   render() {
     return (
       <section>
-        <p>{this.props.msg}</p>
+        <p className={this.props.css}>{this.props.msg}</p>
       </section>
     )
   }

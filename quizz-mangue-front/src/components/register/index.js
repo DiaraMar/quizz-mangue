@@ -2,7 +2,8 @@ import React from 'react'
 import { Modal, Button } from 'react-bootstrap'
 import axios from 'axios'
 
-import CustomMsg from './../CustomMsg'
+import CustomMsg from '../customMsg'
+import './register.scss'
 
 export default class Quizz extends React.Component {
   constructor(props, context) {
@@ -35,7 +36,6 @@ export default class Quizz extends React.Component {
     this.setState({
       [name]: value
     })
-    console.log(this.state)
   }
 
   handleShow() {
@@ -50,18 +50,36 @@ export default class Quizz extends React.Component {
         { headers: { 'Access-Control-Allow-Origin': '*' } }
       )
       .then(res => {
-        console.log(res.data)
-        // const token = res.data.token
-        // localStorage.setItem('authToken', token)
-        // this.setState({ show: false })
-        // this.props.history.push('/profil')
+        this.setState({ show: false, errorMsg: '' })
+        this.props.history.push('/')
       })
       .catch(err => {
-        if (err.response.data === 'mail already exists') {
+        const error = err.response.data
+        if (error === 'mail already exists') {
           this.setState({
             errorMsg: 'Ce mail existe déja'
           })
+        } else {
+          switch (error.errors[0].param) {
+            case 'email':
+              this.setState({
+                errorMsg: 'Verifiez votre mail'
+              })
+              break
+            case 'password':
+              this.setState({
+                errorMsg: 'Votre mot de passe doit avoir au moins 6 caractères'
+              })
+              break
+            case 'pseudo':
+              this.setState({
+                errorMsg: 'Votre pseudo doit avoir au minimum 2 lettres'
+              })
+              break
+            default:
+          }
         }
+        console.log(err.response.data)
       })
   }
 
@@ -80,33 +98,35 @@ export default class Quizz extends React.Component {
           </Modal.Header>
           <Modal.Body>
             <CustomMsg msg={this.state.errorMsg} css="error" />
-            <label htmlFor="pseudo">
-              Pseudo:
-              <input
-                onChange={this.handleChange}
-                name="pseudo"
-                type="pseudo"
-                placeholder="Entrez votre pseudo"
-              />
-            </label>
-            <label htmlFor="email">
-              Email:
-              <input
-                onChange={this.handleChange}
-                name="email"
-                type="email"
-                placeholder="Entrez votre email"
-              />
-            </label>
-            <label htmlFor="password">
-              Mot de passe:
-              <input
-                name="password"
-                onChange={this.handleChange}
-                type="password"
-                placeholder="Entrez votre mot de passe"
-              />
-            </label>
+            <div className="my-modal-body">
+              <label htmlFor="pseudo">
+                Pseudo:
+                <input
+                  onChange={this.handleChange}
+                  name="pseudo"
+                  type="pseudo"
+                  placeholder="Entrez votre pseudo"
+                />
+              </label>
+              <label htmlFor="email">
+                Email:
+                <input
+                  onChange={this.handleChange}
+                  name="email"
+                  type="email"
+                  placeholder="Entrez votre email"
+                />
+              </label>
+              <label htmlFor="password">
+                Mot de passe:
+                <input
+                  name="password"
+                  onChange={this.handleChange}
+                  type="password"
+                  placeholder="Entrez votre mot de passe"
+                />
+              </label>
+            </div>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={this.handleClose}>

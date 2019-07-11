@@ -1,0 +1,56 @@
+// Colors
+$darkBlack: #010005;
+$kakiGold: #c6ac52;
+$blueGround: #84abb2;
+$sweetPink: #f50078;
+// Secondary Color
+$errorClr: #c42d14;
+$gray: #595959;
+$white_gray: #fafafa;
+.error {
+  display: block;
+  width: fit-content;
+  padding: 4px 10px;
+  color: $errorClr;
+  font-size: 12px;
+  font-weight: 400;
+  margin: 5px auto;
+  letter-spacing: 0.8px;
+  background-color: rgba($darkBlack, 0.2);
+  border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+
+  &::before {
+    content: '!';
+    font-weight: 900;
+    font-size: 14px;
+    box-shadow: none;
+    border: 1.2px solid #c42d14;
+    text-align: center;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    padding: 1px;
+    margin-right: 5px;
+    line-height: 9px;
+    border-radius: 50px;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    -ms-border-radius: 50px;
+    -o-border-radius: 50px;
+  }
+  &:empty {
+    display: none;
+    padding: 0px;
+    background: none;
+    &::before {
+      content: '';
+      border: none;
+      margin: 0px;
+      padding: 0px;
+    }
+  }
+}

@@ -1,0 +1,12 @@
+.my-modal-body {
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+  label {
+    display: flex;
+    justify-content: space-between;
+    input {
+      width: 60%;
+    }
+  }
+}

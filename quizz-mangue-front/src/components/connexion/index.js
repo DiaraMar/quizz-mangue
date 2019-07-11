@@ -2,6 +2,7 @@ import React from 'react'
 import { Modal, Button } from 'react-bootstrap'
 import axios from 'axios'
 // import { Route } from 'react-router-dom'
+import './connexion.scss'
 
 export default class Quizz extends React.Component {
   constructor(props, context) {
@@ -51,19 +52,6 @@ export default class Quizz extends React.Component {
   }
 
   render() {
-    // const Button = () => (
-    //   <Route
-    //     render={({ history }) => (
-    //       <button
-    //         type="button"
-    //         onClick={() => {
-    //           history.push('/profil')
-    //         }}>
-    //         Click Me!
-    //       </button>
-    //     )}
-    //   />
-    // )
     return (
       <>
         <p className="link" href="#" onClick={this.handleShow}>
@@ -77,24 +65,26 @@ export default class Quizz extends React.Component {
             <Modal.Title>Connexion</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <label htmlFor="email">
-              Email:
-              <input
-                onChange={this.handleChange}
-                name="email"
-                type="email"
-                placeholder="Entrez votre email"
-              />
-            </label>
-            <label htmlFor="password">
-              Mot de passe:
-              <input
-                name="password"
-                onChange={this.handleChange}
-                type="password"
-                placeholder="Entrez votre mot de passe"
-              />
-            </label>
+            <div className="my-modal-body">
+              <label htmlFor="email">
+                Email:
+                <input
+                  onChange={this.handleChange}
+                  name="email"
+                  type="email"
+                  placeholder="Entrez votre email"
+                />
+              </label>
+              <label htmlFor="password">
+                Mot de passe:
+                <input
+                  name="password"
+                  onChange={this.handleChange}
+                  type="password"
+                  placeholder="Entrez votre mot de passe"
+                />
+              </label>
+            </div>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={this.handleClose}>
