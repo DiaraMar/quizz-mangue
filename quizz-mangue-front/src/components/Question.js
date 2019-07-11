@@ -1,5 +1,6 @@
 import React from 'react'
-// import shortid from 'shortid';
+import shortid from 'shortid'
+import axios from 'axios'
 
 export default class Question extends React.Component {
   constructor(props) {
@@ -48,22 +49,35 @@ export default class Question extends React.Component {
   handleSubmit(event) {
     event.preventDefault()
     console.log('handle submit')
+    this.setState({
+      answers: [...this.state.answers, { answer: event.target.value }]
+    })
+
     this.props.onSubmit({
       question: this.state
     })
-
+    /*const { id_quizz, title, choices, answer, time_limit } = this.state;
+    axios.post(`http://localhost/9999/api/v1/question`, {
+      id_quizz,
+      title,
+      choices,
+      answer,
+      time_limit
+    });*/
     console.log('handle submit', this.state)
   }
 
+  handleLastQuestion(event) {
+    //if(event.target.state === null)
+  }
+
   render() {
-    console.log('question in the question', this.state)
+    console.log('Julia is here ***************************', this.state.answer)
+
     return (
       <section>
-        <form
-          onSubmit={this.handleSubmit}
-          className="w-50"
-          key={this.state.idQuestion}>
-          <label>Question </label>{' '}
+        <div className="w-50" key={this.state.idQuestion}>
+          <label>Question </label>
           <input
             className="form-control"
             name="title"
@@ -115,10 +129,16 @@ export default class Question extends React.Component {
             required
           />
           <br />
-          <button className="btn btn-primary" disabled={!this.state.isAnswer}>
-            Next question
+          <button
+            className="btn btn-primary"
+            disabled={!this.state.isAnswer}
+            onClick={this.handleSubmit}>
+            New question
           </button>
-        </form>
+          <button className="btn btn-primary" onClick={this.handleLastQuestion}>
+            Finish
+          </button>
+        </div>
       </section>
     )
   }
