@@ -1,9 +1,11 @@
 import React from 'react'
-import Quizz from './Quiz'
 import Connexion from './connexion'
 import Register from './register'
 import Profil from './../views/profil'
 import Home from './../views/home'
+import CreateQuestion from './../views/create-question'
+import CreateQuizz from './../views/create-quizz'
+import EndQuizz from './../views/end-quizz'
 import { Route, Link } from 'react-router-dom'
 
 export default class Nav extends React.Component {
@@ -23,7 +25,7 @@ export default class Nav extends React.Component {
             <Link to="/profil">Profil</Link>
           </li>
           <li>
-            <Link to="/quizz">Quizz</Link>
+            <Link to="/create-quizz">Créer un quizz</Link>
           </li>
           <li>
             <Connexion history={this.props.history} />
@@ -36,7 +38,13 @@ export default class Nav extends React.Component {
         <hr />
         <Route path="/" exact component={Home} />
         <Route path="/profil" component={Profil} />
-        <Route path="/quizz" component={Quizz} />
+        <Route
+          path="/create-question"
+          history={this.props.history}
+          component={CreateQuestion}
+        />
+        <Route path="/create-quizz" component={CreateQuizz} />
+        <Route path="/end-quizz" component={EndQuizz} />
       </>
     )
   }

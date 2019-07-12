@@ -1,27 +1,31 @@
 import React from 'react'
 import shortid from 'shortid'
 import axios from 'axios'
+import { Redirect } from 'react-router-dom'
+const initialState = {
+  title: '',
+  choices: {
+    answer0: '',
+    answer1: '',
+    answer2: '',
+    answer3: ''
+  },
+  id_quizz: localStorage.getItem('idQuizz'),
+  answer: '',
+  time_limit: '',
+  isAnswer: false,
+  redirect: false
+}
 
 export default class Question extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      title: 'lol',
-      choices: {
-        answer0: '',
-        answer1: '',
-        answer2: '',
-        answer3: ''
-      },
-      id_quizz: localStorage.getItem('idQuizz'),
-      answer: '',
-      time_limit: 30,
-      isAnswer: false
-    }
+    this.state = initialState
 
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.handleChoice = this.handleChoice.bind(this)
     this.handleAnswer = this.handleAnswer.bind(this)
   }
 
@@ -30,7 +34,10 @@ export default class Question extends React.Component {
     console.log(this.state)
   }
 
-  handleChange(event) {
+  resetState = () => {
+    this.setState(initialState)
+  }
+  handleChoice(event) {
     const name = event.target.name
     const index = name[name.length - 1]
     this.setState({
@@ -47,41 +54,46 @@ export default class Question extends React.Component {
       isAnswer: true
     })
   }
+  handleChange(event) {
+    const name = event.target.name
+    const value = event.target.value
+    this.setState({
+      [name]: value
+    })
+  }
 
   handleSubmit(event) {
     event.preventDefault()
-    console.log('handle submit')
-    // this.setState({
-    //   answers: [...this.state.answers, { answer: event.target.value }]
-    // })
-
-    this.props.onSubmit({
-      question: this.state
-    })
     const { id_quizz, title, choices, answer, time_limit } = this.state
     console.log(id_quizz, title, choices, answer, time_limit)
-
-    axios.post(
-      `http://localhost:9999/api/v1/question`,
-      {
-        id_quizz,
-        title,
-        choices: JSON.stringify(choices),
-        answer,
-        time_limit
-      },
-      { headers: { 'Access-Control-Allow-Origin': '*' } }
-    )
-    console.log('handle submit', this.state)
+    axios
+      .post(
+        `http://localhost:9999/api/v1/question`,
+        {
+          id_quizz,
+          title,
+          choices: JSON.stringify(choices),
+          answer,
+          time_limit
+        },
+        { headers: { 'Access-Control-Allow-Origin': '*' } }
+      )
+      .then(res => {
+        console.log('alo', res)
+        this.resetState()
+      })
   }
 
-  handleLastQuestion(event) {
-    //if(event.target.state === null)
+  handleFinishQuizz = event => {
+    this.setState({
+      redirect: true
+    })
   }
 
   render() {
-    console.log('Julia is here ***************************', this.state.answer)
-
+    if (this.state.redirect) {
+      return <Redirect to="/end-quizz" />
+    }
     return (
       <section>
         <div className="w-50" key={this.state.idQuestion}>
@@ -93,46 +105,68 @@ export default class Question extends React.Component {
             onChange={this.handleChange}
             required
           />
-          <label>Proposition </label>{' '}
-          <input
-            className="form-control"
-            name="answer0"
-            value={this.state.firstProposition}
-            onChange={this.handleChange}
-            onClick={this.handleAnswer}
-            required
-          />
-          <label>Proposition </label>{' '}
-          <input
-            className="form-control"
-            name="answer1"
-            value={this.state.secondProposition}
-            onChange={this.handleChange}
-            onClick={this.handleAnswer}
-            required
-          />
-          <label>Proposition </label>{' '}
-          <input
-            className="form-control"
-            name="answer2"
-            value={this.state.thirdProposition}
-            onChange={this.handleChange}
-            onClick={this.handleAnswer}
-          />
-          <label>Proposition </label>{' '}
-          <input
-            className="form-control"
-            name="answer3"
-            value={this.state.fourthProposition}
-            onChange={this.handleChange}
-            onClick={this.handleAnswer}
-          />
-          <label>time limite for this question </label>{' '}
+          <label>
+            Réponse 1
+            <input
+              className="form-control"
+              name="answer0"
+              value={this.state.choices.answer0}
+              onChange={this.handleChoice}
+              required
+            />
+          </label>
+          <label>
+            Réponse 2
+            <input
+              className="form-control"
+              name="answer1"
+              value={this.state.choices.answer1}
+              onChange={this.handleChoice}
+              required
+            />
+          </label>
+          <label>
+            Réponse 3
+            <input
+              className="form-control"
+              name="answer2"
+              value={this.state.choices.answer2}
+              onChange={this.handleChoice}
+            />
+          </label>
+          <label>
+            Réponse 4
+            <input
+              className="form-control"
+              name="answer3"
+              onChange={this.handleChoice}
+              value={this.state.choices.answer3}
+            />
+          </label>
+          <label htmlFor="answer">
+            Vraie réponse
+            <select name="answer" onChange={this.handleChange} id="answer">
+              <option>Choisissez la vraie réponse</option>
+              <option value={this.state.choices.answer0}>
+                {this.state.choices.answer0}
+              </option>
+              <option value={this.state.choices.answer1}>
+                {this.state.choices.answer1}
+              </option>
+              <option value={this.state.choices.answer2}>
+                {this.state.choices.answer2}
+              </option>
+              <option value={this.state.choices.answer3}>
+                {this.state.choices.answer3}
+              </option>
+            </select>
+          </label>
+          <label>time limit for this question </label>{' '}
           <input
             type="number"
             className="form-control"
-            name="timeLimit"
-            value={this.state.timeLimit}
+            name="time_limit"
+            value={this.state.time_limit}
             onChange={this.handleChange}
             required
           />
@@ -141,10 +175,10 @@ export default class Question extends React.Component {
             className="btn btn-primary"
             // disabled={!this.state.isAnswer}
             onClick={this.handleSubmit}>
-            New question
+            Ajouter la question
           </button>
-          <button className="btn btn-primary" onClick={this.handleLastQuestion}>
-            Finish
+          <button className="btn btn-primary" onClick={this.handleFinishQuizz}>
+            Terminer le quizz
           </button>
         </div>
       </section>
