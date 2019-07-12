@@ -22,11 +22,11 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <section>
+      <section className="end-quizz">
         <h1>Vous avez terminer votre quizz !!</h1>
         <p>
           Pour inviter vos amis a joué donnez leur le pin suivant :{' '}
-          {this.state.pin}
+          {this.state.pin.toUpperCase()}
         </p>
       </section>
     )

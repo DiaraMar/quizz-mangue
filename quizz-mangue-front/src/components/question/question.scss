@@ -1,0 +1,25 @@
+.question {
+  width: 320px;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  .question-inputs {
+    width: 100%;
+    label {
+      width: 50%;
+      &:nth-child(7),
+      &:last-child {
+        width: 100%;
+      }
+      select {
+        width: 100%;
+      }
+      &.time-limit {
+        width: 100%;
+      }
+    }
+    .add-question {
+      margin-right: 3%;
+    }
+  }
+}

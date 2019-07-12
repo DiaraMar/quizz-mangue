@@ -1,0 +1,13 @@
+.end-quizz {
+  width: 100%;
+  height: calc(100vh - 51px);
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  h1 {
+    width: 100%;
+    margin: 0;
+    text-align: center;
+  }
+}

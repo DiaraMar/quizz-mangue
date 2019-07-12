@@ -4,7 +4,7 @@ import { Router } from 'react-router'
 import createHistory from 'history/createBrowserHistory'
 import './App.css'
 
-import Nav from './components/Nav'
+import Nav from './components/nav'
 const history = createHistory()
 
 export default class App extends React.Component {

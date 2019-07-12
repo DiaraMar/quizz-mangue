@@ -1,7 +1,7 @@
 import React from 'react'
-import shortid from 'shortid'
 import axios from 'axios'
 import { Redirect } from 'react-router-dom'
+import './question.scss'
 const initialState = {
   title: '',
   choices: {
@@ -95,8 +95,8 @@ export default class Question extends React.Component {
       return <Redirect to="/end-quizz" />
     }
     return (
-      <section>
-        <div className="w-50" key={this.state.idQuestion}>
+      <section className="question">
+        <div className="question-inputs" key={this.state.idQuestion}>
           <label>Question </label>
           <input
             className="form-control"
@@ -161,18 +161,20 @@ export default class Question extends React.Component {
               </option>
             </select>
           </label>
-          <label>time limit for this question </label>{' '}
-          <input
-            type="number"
-            className="form-control"
-            name="time_limit"
-            value={this.state.time_limit}
-            onChange={this.handleChange}
-            required
-          />
+          <label className="time-limit">
+            Limite de temps
+            <input
+              type="number"
+              className="form-control"
+              name="time_limit"
+              value={this.state.time_limit}
+              onChange={this.handleChange}
+              required
+            />
+          </label>
           <br />
           <button
-            className="btn btn-primary"
+            className="btn btn-primary add-question"
             // disabled={!this.state.isAnswer}
             onClick={this.handleSubmit}>
             Ajouter la question

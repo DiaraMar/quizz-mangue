@@ -1,0 +1,12 @@
+.quizz-input {
+  width: 100%;
+  label {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .btn {
+    margin: auto;
+    display: block;
+  }
+}

@@ -1,0 +1,9 @@
+.create-quizz {
+  width: 320px;
+  height: calc(100vh - 51px);
+  display: flex;
+  margin: auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,7 +1,8 @@
 import React from 'react'
 import axios from 'axios'
 import { Redirect } from 'react-router-dom'
-import CustomMsg from './customMsg'
+import CustomMsg from '../customMsg'
+import './quiz.scss'
 
 export default class Quiz extends React.Component {
   constructor(props) {
@@ -71,15 +72,18 @@ export default class Quiz extends React.Component {
       return <Redirect to="/create-question" />
     }
     return (
-      <section>
-        <h1>Create a quizz </h1>
+      <section className="quizz-input">
         <CustomMsg msg={this.state.error} css="error" />
-        <form onSubmit={this.handleSubmitQuizz} className="w-50">
-          <label>Name of your quizz </label>
-          <input name="title" onChange={this.handleChange} required />
-          <label>Theme of your quizz </label>
-          <input name="theme" onChange={this.handleChange} required />
-          <button className="btn btn-primary">CREATE A QUIZZ</button>
+        <form onSubmit={this.handleSubmitQuizz} className="quizz-form">
+          <label>
+            Nom du quizz:
+            <input name="title" onChange={this.handleChange} required />
+          </label>
+          <label>
+            Theme du quizz:
+            <input name="theme" onChange={this.handleChange} required />{' '}
+          </label>
+          <button className="btn btn-primary">Créer le quizz</button>
         </form>
       </section>
     )

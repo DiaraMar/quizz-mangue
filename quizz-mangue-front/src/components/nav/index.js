@@ -1,12 +1,13 @@
 import React from 'react'
-import Connexion from './connexion'
-import Register from './register'
-import Profil from './../views/profil'
-import Home from './../views/home'
-import CreateQuestion from './../views/create-question'
-import CreateQuizz from './../views/create-quizz'
-import EndQuizz from './../views/end-quizz'
+import Connexion from '../connexion'
+import Register from '../register'
+import Profil from '../../views/profil'
+import Home from '../../views/home'
+import CreateQuestion from '../../views/create-question'
+import CreateQuizz from '../../views/create-quizz'
+import EndQuizz from '../../views/end-quizz'
 import { Route, Link } from 'react-router-dom'
+import './nav.scss'
 
 export default class Nav extends React.Component {
   constructor(props) {
@@ -17,7 +18,7 @@ export default class Nav extends React.Component {
   render() {
     return (
       <>
-        <ul>
+        <ul className="nav">
           <li>
             <Link to="/">Home</Link>
           </li>
@@ -34,8 +35,7 @@ export default class Nav extends React.Component {
             <Register history={this.props.history} />
           </li>
         </ul>
-
-        <hr />
+        <hr className="hr" />
         <Route path="/" exact component={Home} />
         <Route path="/profil" component={Profil} />
         <Route

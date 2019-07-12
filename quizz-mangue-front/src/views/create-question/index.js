@@ -1,5 +1,5 @@
 import React from 'react'
-import Question from './../../components/Question'
+import Question from '../../components/question/index.'
 import './create-question.scss'
 
 export default class App extends React.Component {
@@ -16,8 +16,8 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <section>
-        <h1>Bienvenu sur create question</h1>
+      <section className="create-question">
+        <h1>Créez vos question !</h1>
         <Question />
       </section>
     )
