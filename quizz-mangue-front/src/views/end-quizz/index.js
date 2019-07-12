@@ -26,7 +26,7 @@ export default class App extends React.Component {
         <h1>Vous avez terminer votre quizz !!</h1>
         <p>
           Pour inviter vos amis a joué donnez leur le pin suivant :{' '}
-          {this.state.pin.toUpperCase()}
+          <span className="pin">{this.state.pin.toUpperCase()}</span>
         </p>
       </section>
     )
